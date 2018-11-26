@@ -1,0 +1,37 @@
+audio2bin.py
+
+get video data -> self.length etc in class
+get chunk from a[sec] to b[sec] (video, a, b) -> list = [numbers...]
+return videos
+write videos
+
+main()
+get video
+separate
+write
+
+--------------
+
+bin2spectrum.py
+
+get bin video data
+change to spectrum (bin data) -> img
+return images
+write images
+
+main()
+get video
+get bin data
+change
+write
+
+----------------
+
+make_spectrum_data.py
+
+get video (filename)
+for (videolength / chuncklength)
+    get chunk (video, a, b) -> binary
+    change to spectrum
+    write images
+exit
