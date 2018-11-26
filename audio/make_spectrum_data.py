@@ -13,7 +13,7 @@ def makeDirectory(filename):
         os.mkdir("./wav_split/{}".format(filename))
 
 def writeText(spec_data, dataname):
-    with open("{}.txt".format(dataname), "w") as f:
+    with open("./wav_text/{}.txt".format(dataname), "w") as f:
         for i in range(len(spec_data)):
             for k in range(3):
                 for j in range(len(spec_data[i])-1, -1, -1):
