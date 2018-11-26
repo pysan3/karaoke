@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 flowchart for the whole progect
 
 write whatever needed
@@ -39,4 +40,47 @@ funcs = {
     if user input new song, send to server,
     ranking,
     user sign-in,
+=======
+flowchart for the whole progect
+
+write whatever needed
+
+index:
+1. make_spectrum_data
+
+---------
+
+1. make_spectrum_data
+input = audio_data (file.wav)
+output = spectrogram
+- return data with "return_audio_data"
+
+2. change users sound (not done)
+input = users_data (len = 192 frames)
+output = spectrogram (?)
+- should be FAST
+
+3 server (not done)
+place to store audio datas \ github can only store data upto 500MB
+place to store user's datas, good singers data
+place to run code {
+    get users_data
+    change to spectrogram
+    CNN
+    return points
+
+    load new songs from users
+}
+- use RasPi (?) need to work on Unix
+
+4 App (not done)
+for iPhone and Andriods
+learn new langs (Java, Swift)
+- think of an user-friendly UI
+funcs = {
+    [server : send users_data, get points],
+    if user input new song, send to server,
+    ranking,
+    user sign-in,
+>>>>>>> d80c713510c9b652f8618c8f75c6addf0692c8ac
 }
