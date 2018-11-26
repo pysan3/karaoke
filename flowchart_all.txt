@@ -1,0 +1,6 @@
+flowchart for the whole progect
+
+write whatever needed
+
+index:
+
