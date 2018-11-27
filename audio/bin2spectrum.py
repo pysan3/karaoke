@@ -40,7 +40,7 @@ class Spectrum:
         file_number = "{:02d}".format((width//192)+1) if width != -1 else ".Spectrogram"
         color_T.save("./wav_split/" + dataname + "/" + file_number + ".png")
         if width == -1:
-            # color_T.show()
+            color_T.show()
             print("done :", dataname)
             self.color = np.array(color_T).transpose(1,0,2)
             return self.color
