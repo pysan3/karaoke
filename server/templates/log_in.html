@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+
+<h1>login page for users</h1>
+<form action="{{ url_for('logged_in') }}" method="post">
+
+    <ul>
+        <li><h3>user_name</h3></li>
+        <li><input name="user_name" class="form-control" type="text" size="30"></li>
+        <li><h3>password</h3></li>
+        <li><input name="password" class="form-control" type="text" size="30"></li>
+        <input class="btn btn-primary" type="submit" value="log_in">
+    </ul>
+
+</form>
+
+{% endblock %}
