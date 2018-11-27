@@ -29,7 +29,7 @@ class Spectrum:
 
     def writeImage(self, dataname, width):
         mono_T = (self.mono.T) * 256
-        diff = mono_T.shape[0] - int(mono_T.shape[0]*0.75)
+        diff = mono_T.shape[0] - int(mono_T.shape[0]/3)
         shape = (mono_T.shape[0] - diff, (192 if width != -1 else mono_T.shape[1]))
         mono_T = [[int(mono_T[i+diff][j+width]) for j in range(shape[1])] for i in range(shape[0])]
         color_shape = (shape[1]//3, shape[0])
