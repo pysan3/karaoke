@@ -4,15 +4,36 @@ from pandas.plotting import scatter_matrix
 import pandas as pd
 import time
 import io
+from flask import Flask, request, g, redirect, url_for, render_template, flash
+app = Flask(__name__)
+app.config.from_object(__name__)
 
 user_list = [
     ["takuto", "000"]
 ]
 
+app.config.update(dict(
+    DATABASE='./db.sqlite3',
+    USER_DATABASE='./user_db.sqlite3',
+    SECRET_KEY='foo-baa',
+))
+
 def return_id(database, user_name):
     cur = database.execute('select * from user_datas where user_name=?', (user_name,))
     row = cur.fetchone()
     return row["id"]
+
+def connect_db():
+    """ データベース接続に接続します """
+    database = sqlite3.connect(app.config['USER_DATABASE'])
+    database.row_factory = sqlite3.Row
+    return database
+
+def get_db():
+    """ connectionを取得します """
+    if not hasattr(g, 'sqlite_db'):
+        g.sqlite_db = connect_db()
+    return g.sqlite_db
 
 class Database:
 
@@ -27,7 +48,7 @@ class Database:
         return "False"
 
     def select_all(self):
-        cur = self.database.execute('select * from user_datas')
+        cur = self.database.execute('select id, user_name, user_password from user_datas order by id desc')
         return cur.fetchall()
 
     def logged_in(self, user_name, password):
@@ -64,6 +85,7 @@ class Database:
             cur = self.database.execute('select * from user_datas where user_name=?', (user_name,))
             row = cur.fetchone()
             print('row =', row)
+            print('row_id =', row['id'])
             return row['id']
         else:
             return "False"

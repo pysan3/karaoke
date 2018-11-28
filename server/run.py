@@ -9,6 +9,7 @@ app.config.from_object(__name__)
 
 app.config.update(dict(
     DATABASE='./db.sqlite3',
+    USER_DATABASE='./user_db.sqlite3',
     SECRET_KEY='foo-baa',
 ))
 
@@ -29,7 +30,7 @@ def logged_in():
     flash('hogehoge')
     user_name = request.form['user_name']
     password = request.form['password']
-    database = get_db()
+    database = userDatabase.get_db()
     db = userDatabase.Database(database)
     user_id = db.logged_in(user_name, password)
     print(user_id)
@@ -46,7 +47,7 @@ def sign_in():
 def signed_in():
     user_name = request.form['user_name']
     password = request.form['password']
-    database = get_db()
+    database = userDatabase.get_db()
     db = userDatabase.Database(database)
     user_id = db.signed_in(user_name, password)
     print(user_id)
@@ -57,9 +58,16 @@ def signed_in():
 
 @app.route('/user_page')
 def user_page():
-    database = get_db()
+    database = userDatabase.get_db()
     results = models.select_all(database)
     return redirect(url_for('index', results=results))
+
+@app.route('/database')
+def database():
+    database = userDatabase.get_db()
+    db = userDatabase.Database(database)
+    results = db.select_all()
+    return render_template('database.html', results=results)
 
 @app.route('/records')
 def records():
@@ -77,12 +85,6 @@ def voice_upload():
 def points():
     return render_template('points.html')
 
-@app.route('/database')
-def database():
-    database = get_db()
-    db = userDatabase.Database(database)
-    results = db.select_all()
-    return render_template('database.html', results=results)
 
 # ignore below
 def connect_db():
