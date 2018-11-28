@@ -29,12 +29,31 @@ def logged_in():
     flash('hogehoge')
     user_name = request.form['user_name']
     password = request.form['password']
-    db = userDatabase.Database()
-    user_id = db.get(user_name, password)
+    database = get_db()
+    db = userDatabase.Database(database)
+    user_id = db.logged_in(user_name, password)
+    print(user_id)
     if user_id != "False":
         return redirect(url_for('user_page'))
     else:
         return redirect(url_for('log_in'))
+
+@app.route('/sign_in')
+def sign_in():
+    return render_template('sign_in.html')
+
+@app.route('/signed_in', methods=['POST'])
+def signed_in():
+    user_name = request.form['user_name']
+    password = request.form['password']
+    database = get_db()
+    db = userDatabase.Database(database)
+    user_id = db.signed_in(user_name, password)
+    print(user_id)
+    if user_id != 'False':
+        return redirect(url_for('user_page'))
+    else:
+        return redirect(url_for('sign_in'))
 
 @app.route('/user_page')
 def user_page():
@@ -58,8 +77,14 @@ def voice_upload():
 def points():
     return render_template('points.html')
 
+@app.route('/database')
+def database():
+    database = get_db()
+    db = userDatabase.Database(database)
+    results = db.select_all()
+    return render_template('database.html', results=results)
+
 # ignore below
-# 以下、DB接続関連の関数
 def connect_db():
     """ データベース接続に接続します """
     database = sqlite3.connect(app.config['DATABASE'])

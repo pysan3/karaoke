@@ -6,13 +6,13 @@
     <tr>
         <th>id</th>
         <th>title</th>
-        <th>date</th>
+        <th>time</th>
         <th>操作</th>
     </tr>
     {% for result in results %}
     <tr>
         <td>{{ result.id }}</td>
-        <td>{{ result.title|safe}}</td>
+        <td>{{ result.title }}</td>
         <td>{{ result.created }}</td>
         <td>
             <a href="/view/{{ result.id }}"><button class="btn btn-primary">参照</button></a>
@@ -36,6 +36,7 @@
     <li><a href="/audio_upload">audio_upload</a></li>
     <li><a href="/voice_upload">voice_upload</a></li>
     <li><a href="/points">points</a></li>
+    <li><a href="/database">database</a></li>
 </ul>
 
 {% endblock %}

@@ -3,17 +3,14 @@
 
 <h1>login page for users</h1>
 
-<h3>no accounts</h3>
-<h4><a href="/sign_in">sign_in</a></h4>
-
-<form action="{{ url_for('logged_in') }}" method="post">
+<form action="{{ url_for('signed_in') }}" method="post">
 
     <ul>
         <li><h3>user_name</h3></li>
         <li><input name="user_name" class="form-control" type="text" size="30"></li>
         <li><h3>password</h3></li>
         <li><input name="password" class="form-control" type="text" size="30"></li>
-        <input class="btn btn-primary" type="submit" value="log_in">
+        <input class="btn btn-primary" type="submit" value="sign_in">
     </ul>
 
 </form>
