@@ -61,7 +61,7 @@ def user_page():
     database = userDatabase.get_db()
     db = userDatabase.Database(database)
     results = db.select_all()
-    return redirect(url_for('index', results=results))
+    return render_template('user.html')
 
 @app.route('/database')
 def database():
@@ -70,9 +70,16 @@ def database():
     results = db.select_all()
     return render_template('database.html', results=results)
 
+@app.route('/score')
+def score():
+    return render_template('score.html')
+
 @app.route('/records')
 def records():
-    return render_template('records.html')
+    database = userDatabase.get_db()
+    db = userDatabase.Database(database)
+    results = db.select_all()
+    return render_template('records.html', results=results)
 
 @app.route('/audio_upload')
 def audio_upload():

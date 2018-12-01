@@ -8,10 +8,6 @@ from flask import Flask, request, g, redirect, url_for, render_template, flash
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-user_list = [
-    ["takuto", "000"]
-]
-
 app.config.update(dict(
     USER_DATABASE='./user_db.sqlite3',
     SECRET_KEY='foo-baa',
@@ -40,33 +36,12 @@ class Database:
     def __init__(self, database):
         self.database = database
 
-    def get(self, user_name, password):
-        for i in range(len(user_list)):
-            if user_list[i][0] == user_name:
-                if user_list[i][1] == password:
-                    return i
-        return "False"
-
     def select_all(self):
         cur = self.database.cursor()
         cur = cur.execute('select id, user_name, user_password from user_datas order by id desc')
         return cur.fetchall()
 
     def logged_in(self, user_name, password):
-        """
-        try:
-            cur = self.database.execute('select * from user_datas where user_name=?', (user_name,))
-            row = cur.fetchone()
-            print("cur found")
-            for i in range(4):
-                print(row[i])
-            if row["user_password"] == password:
-                return row["id"]
-            else:
-                return "False"
-        except:
-            return "False"
-        """
         cur = self.database.cursor()
         cur = cur.execute('select * from user_datas where user_name=?', (user_name,))
         row = cur.fetchone()
@@ -105,4 +80,4 @@ class Database:
 class User:
 
     def __init__(self, id):
-        self.user = user_list[id]
+        pass
