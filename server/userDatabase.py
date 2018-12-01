@@ -13,12 +13,12 @@ user_list = [
 ]
 
 app.config.update(dict(
-    DATABASE='./db.sqlite3',
     USER_DATABASE='./user_db.sqlite3',
     SECRET_KEY='foo-baa',
 ))
 
 def return_id(database, user_name):
+    cur = database.cursor()
     cur = database.execute('select * from user_datas where user_name=?', (user_name,))
     row = cur.fetchone()
     return row["id"]
@@ -48,7 +48,8 @@ class Database:
         return "False"
 
     def select_all(self):
-        cur = self.database.execute('select id, user_name, user_password from user_datas order by id desc')
+        cur = self.database.cursor()
+        cur = cur.execute('select id, user_name, user_password from user_datas order by id desc')
         return cur.fetchall()
 
     def logged_in(self, user_name, password):
@@ -66,7 +67,8 @@ class Database:
         except:
             return "False"
         """
-        cur = self.database.execute('select * from user_datas where user_name=?', (user_name,))
+        cur = self.database.cursor()
+        cur = cur.execute('select * from user_datas where user_name=?', (user_name,))
         row = cur.fetchone()
         if row == None:
             print('user_name doesnt exist')
@@ -78,11 +80,21 @@ class Database:
         return "False"
 
     def signed_in(self, user_name, password):
-        cur = self.database.execute('select * from user_datas where user_name=?', (user_name,))
-        row = cur.fetchone()
+        con = self.database.cursor()
+        cur = con.execute('select * from user_datas where user_name=?', (user_name,))
+        row = con.fetchone()
         if row == None:
-            self.database.execute('insert into user_datas (user_name, user_password) values (?, ?)', (user_name, password))
-            cur = self.database.execute('select * from user_datas where user_name=?', (user_name,))
+            print('data doesnt exist')
+            i = 0
+            while True:
+                con = self.database.cursor()
+                cur = con.execute('select * from user_datas where id=?', (i,))
+                if con.fetchone() == None:
+                    con.execute('insert into user_datas (id, user_name, user_password) values (?, ?, ?)', [i, user_name, password])
+                    self.database.commit()
+                    break
+                i += 1
+            cur = con.execute('select * from user_datas where user_name=?', (user_name,))
             row = cur.fetchone()
             print('row =', row)
             print('row_id =', row['id'])

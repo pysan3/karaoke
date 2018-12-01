@@ -59,7 +59,8 @@ def signed_in():
 @app.route('/user_page')
 def user_page():
     database = userDatabase.get_db()
-    results = models.select_all(database)
+    db = userDatabase.Database(database)
+    results = db.select_all()
     return redirect(url_for('index', results=results))
 
 @app.route('/database')
