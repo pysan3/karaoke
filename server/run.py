@@ -58,9 +58,9 @@ def signed_in():
 
 @app.route('/user_page')
 def user_page():
-    database = userDatabase.get_db()
-    db = userDatabase.Database(database)
-    results = db.select_all()
+    # database = userDatabase.get_db()
+    # db = userDatabase.Database(database)
+    # results = db.select_all()
     return render_template('user.html')
 
 @app.route('/database')
